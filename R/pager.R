@@ -180,7 +180,13 @@ pagerModule <- function(input, output, session, page_break = 20, n_items) {
   })
   at_first <- reactive({ s_page() == 1 })
   at_last <- reactive({ s_page() == n_pages() })
-
+  
+  # reset page to 1 when n_items changes
+  observe({
+    # print(paste("n_items has changed to ", n_items()))
+    s_page(n_items()/n_items())
+  })
+  
   # Track most recently selected page
   observe({
     pgs <- sort(names(input))
